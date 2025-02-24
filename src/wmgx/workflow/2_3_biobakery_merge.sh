@@ -44,7 +44,7 @@ MERGED_HUMANN_pathabundance_relab="${MERGED_DIR}/humann_relab/${BIOPROJECT}_path
 MERGED_HUMANN_pathabundance_rpk="${MERGED_DIR}/humann_rpk/${BIOPROJECT}_pathabundance_rpk.tsv"
 
 # Input and output files
-INPUT_RUNINFO="/cfs/klemming/home/x/xueyaw/xueyao/data/metagenomics/$BIOPROJECT/${BIOPROJECT}__runinfo.txt"
+INPUT_RUNINFO="/cfs/klemming/home/x/xueyaw/xueyao/data/metagenomics/$BIOPROJECT/0_metadata/${BIOPROJECT}_runinfo.txt"
 OUTPUT_RUNINFO="$MERGED_DIR/filtered_runinfo.txt"
 
 
