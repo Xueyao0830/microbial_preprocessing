@@ -14,7 +14,7 @@
 source /cfs/klemming/home/x/xueyaw/xueyao/miniconda/etc/profile.d/conda.sh
 conda activate biobakery_env
 
-BIOPROJECT="PRJNA526861"
+BIOPROJECT="PRJNA731589"
 BASE_DIR="/cfs/klemming/home/x/xueyaw/xueyao/data/metagenomics/$BIOPROJECT/2_biobakery_output_array"
 MERGED_DIR="/cfs/klemming/home/x/xueyaw/xueyao/data/metagenomics/$BIOPROJECT/3_biobakery_merged"
 TMP_DIR="/cfs/klemming/home/x/xueyaw/xueyao/data/metagenomics/$BIOPROJECT/tmp"
@@ -29,7 +29,7 @@ MERGED_KNEADDATA="${MERGED_DIR}/${BIOPROJECT}_kneaddata_read_count_table_merged.
 
 MERGED_METAPHLAN_COUNTS="${MERGED_DIR}/${BIOPROJECT}_metaphlan_species_counts_table.tsv"
 MERGED_METAPHLAN_TAXO="${MERGED_DIR}/${BIOPROJECT}_metaphlan_taxonomic_profiles.tsv"
-SRC_UTILS="/cfs/klemming/home/x/xueyaw/xueyao/project/mm_network_tetralith/mm_network/src/metagenomics/utils"
+SRC_UTILS="/cfs/klemming/home/x/xueyaw/xueyao/project/microbial_preprocessing/src/wmgx/utils"
 
 
 SELECTED_SAMPLES="${MERGED_DIR}/selected_samples.txt"
@@ -154,16 +154,14 @@ METAPHLAN_ABSOLUTE_ABUNDANCE_OUTPUTS=""
 
 # Loop through selected samples and collect metaphlan taxonomic profile paths
 while read -r SAMPLE_ID; do
-    METAPHLAN_TABLE="${BASE_DIR}/${SAMPLE_ID}/metaphlan/merged/metaphlan_taxonomic_profiles.tsv"
-    
-    #echo $METAPHLAN_TABLE
+    METAPHLAN_TABLE_1="${BASE_DIR}/${SAMPLE_ID}/metaphlan/main/${SAMPLE_ID}_1_taxonomic_profile.tsv"
+    METAPHLAN_TABLE_2="${BASE_DIR}/${SAMPLE_ID}/metaphlan/main/${SAMPLE_ID}_2_taxonomic_profile.tsv"
 
-
-    if [ -f "$METAPHLAN_TABLE" ]; then
-        METAPHLAN_ABSOLUTE_ABUNDANCE_OUTPUTS="${METAPHLAN_ABSOLUTE_ABUNDANCE_OUTPUTS:+$METAPHLAN_ABSOLUTE_ABUNDANCE_OUTPUTS }$METAPHLAN_TABLE"
-
+    # Check if both files exist and append them
+    if [ -f "$METAPHLAN_TABLE_1" ] && [ -f "$METAPHLAN_TABLE_2" ]; then
+        METAPHLAN_ABSOLUTE_ABUNDANCE_OUTPUTS="${METAPHLAN_ABSOLUTE_ABUNDANCE_OUTPUTS:+$METAPHLAN_ABSOLUTE_ABUNDANCE_OUTPUTS }$METAPHLAN_TABLE_1 $METAPHLAN_TABLE_2"
     else
-        echo "⚠️ Warning: MetaPhlAn table missing for sample $SAMPLE_ID"
+        echo "⚠️ Warning: Missing one or both MetaPhlAn tables for sample $SAMPLE_ID"
     fi
 done < "$SELECTED_SAMPLES"
 
@@ -181,14 +179,16 @@ echo "✅ Merging complete: ${MERGED_DIR}/${BIOPROJECT}_metaphlan_taxonomic_prof
 
 
 
+
 ############################### humann ########################
 # Process each selected sample
 while read -r SAMPLE_ID; do
     
-    cp $BASE_DIR/${SAMPLE_ID}/humann/merged/genefamilies.tsv  $TMP_MERGED_HUMANN_genefamilies_rpk
-    cp $BASE_DIR/${SAMPLE_ID}/humann/merged/genefamilies_relab.tsv  $TMP_MERGED_HUMANN_genefamilies_relab
-    cp $BASE_DIR/${SAMPLE_ID}/humann/merged/pathabundance.tsv  $TMP_MERGED_HUMANN_pathabundance_rpk
-    cp $BASE_DIR/${SAMPLE_ID}/humann/merged/pathabundance_relab.tsv  $TMP_MERGED_HUMANN_pathabundance_relab
+        cp "$BASE_DIR/${SAMPLE_ID}/humann/merged/genefamilies.tsv" "$TMP_MERGED_HUMANN_genefamilies_rpk/${SAMPLE_ID}_genefamilies.tsv"
+        cp "$BASE_DIR/${SAMPLE_ID}/humann/merged/genefamilies_relab.tsv" "$TMP_MERGED_HUMANN_genefamilies_relab/${SAMPLE_ID}_genefamilies_relab.tsv"
+        cp "$BASE_DIR/${SAMPLE_ID}/humann/merged/pathabundance.tsv" "$TMP_MERGED_HUMANN_pathabundance_rpk/${SAMPLE_ID}_pathabundance.tsv"
+        cp "$BASE_DIR/${SAMPLE_ID}/humann/merged/pathabundance_relab.tsv" "$TMP_MERGED_HUMANN_pathabundance_relab/${SAMPLE_ID}_pathabundance_relab.tsv"
+
 
 
 done < "$SELECTED_SAMPLES"

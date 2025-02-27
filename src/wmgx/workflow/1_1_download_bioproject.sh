@@ -1,12 +1,12 @@
 #!/bin/bash
 #SBATCH -A naiss2024-5-709
-#SBATCH -J download_PRJNA731589
+#SBATCH -J download_PRJNA484031
 #SBATCH --partition=main
 #SBATCH -t 23:30:00  # 4 hours, adjust if needed
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=512G
-#SBATCH -o /cfs/klemming/home/x/xueyaw/xueyao/data/metagenomics/PRJNA731589/log/%x_%A_%a.log
-#SBATCH -e /cfs/klemming/home/x/xueyaw/xueyao/data/metagenomics/PRJNA731589/log/%x_%A_%a.err
+#SBATCH -o /cfs/klemming/home/x/xueyaw/xueyao/data/metagenomics/PRJNA484031/log/%x_%A_%a.log
+#SBATCH -e /cfs/klemming/home/x/xueyaw/xueyao/data/metagenomics/PRJNA484031/log/%x_%A_%a.err
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-user=xueyao.wang@ki.se
 
@@ -15,7 +15,7 @@ source /cfs/klemming/home/x/xueyaw/xueyao/miniconda/etc/profile.d/conda.sh
 conda activate biobakery_env
 
 # Define variables
-BIOPROJECT="PRJNA731589"
+BIOPROJECT="PRJNA484031"
 OUTPUT_DIR="/cfs/klemming/home/x/xueyaw/xueyao/data/metagenomics/$BIOPROJECT/1_1_raw"
 OUTPUT_METADATA_DIR="/cfs/klemming/home/x/xueyaw/xueyao/data/metagenomics/$BIOPROJECT/0_metadata"
 LOG_FILE="/cfs/klemming/home/x/xueyaw/xueyao/data/metagenomics/$BIOPROJECT/1_1_raw_download.log"
@@ -56,7 +56,7 @@ fastq_dump() {
     local SRR_ID=$1
     local LAYOUT=$2
     local LibraryStrategy=$3
-    local BIOPROJECT="PRJNA731589"
+    local BIOPROJECT="PRJNA484031"
     local OUTPUT_DIR="/cfs/klemming/home/x/xueyaw/xueyao/data/metagenomics/$BIOPROJECT/1_1_raw"
     local OUTPUT_METADATA_DIR="/cfs/klemming/home/x/xueyaw/xueyao/data/metagenomics/$BIOPROJECT/0_metadata"
     local LOG_FILE="/cfs/klemming/home/x/xueyaw/xueyao/data/metagenomics/$BIOPROJECT/1_1_raw_download.log"

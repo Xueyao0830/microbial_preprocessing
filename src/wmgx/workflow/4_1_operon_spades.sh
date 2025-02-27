@@ -29,16 +29,18 @@ SAMPLES=SRR14610570
 mkdir -p $OUTPUT_DIR
 mkdir -p $OUTPUT_DIR/${SAMPLES}
 
-#repair.sh in1=$INPUT_DIR/$SAMPLES/kneaddata/main/${SAMPLES}_1.fastq.gz in2=$INPUT_DIR/$SAMPLES/kneaddata/main/${SAMPLES}_2.fastq.gz \
-#          out1=/cfs/klemming/home/x/xueyaw/xueyao/tmp/spades/paired_1.fastq.gz out2=/cfs/klemming/home/x/xueyaw/xueyao/tmp/spades/paired_2.fastq.gz outsingle=orphans.fastq.gz
+repair.sh in1=$INPUT_DIR/$SAMPLES/kneaddata/main/${SAMPLES}_1.fastq.gz in2=$INPUT_DIR/$SAMPLES/kneaddata/main/${SAMPLES}_2.fastq.gz \
+          out1=/cfs/klemming/home/x/xueyaw/xueyao/tmp/spades/paired_1.fastq.gz out2=/cfs/klemming/home/x/xueyaw/xueyao/tmp/spades/paired_2.fastq.gz outsingle=orphans.fastq.gz
 
 
 
-#$WORK_DIR/metaspades.py -1 $OUTPUT_DIR/${SAMPLES}/repaired/${SAMPLES}_1.fastq.gz \
-#            -2 $OUTPUT_DIR/${SAMPLES}/repaired/${SAMPLES}_2.fastq.gz \
-#            -o $OUTPUT_DIR/${SAMPLES}/spades \
-#            --threads 16 \
-#            --memory 128 
+$WORK_DIR/metaspades.py -1 $OUTPUT_DIR/${SAMPLES}/repaired/${SAMPLES}_1.fastq.gz \
+            -2 $OUTPUT_DIR/${SAMPLES}/repaired/${SAMPLES}_2.fastq.gz \
+            -o $OUTPUT_DIR/${SAMPLES}/spades \
+            -k 21,33,55,77 \
+            --threads 16 \
+            --memory 128 \
+            --cov-cutoff auto
 
 prokka --outdir $OUTPUT_DIR/${SAMPLES}/prokka \
        --prefix sample \

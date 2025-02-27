@@ -4,6 +4,9 @@ BIOPROJECT="PRJNA731589"
 OUTPUT_DIR="/cfs/klemming/home/x/xueyaw/xueyao/data/metagenomics/$BIOPROJECT/2_biobakery_output_array"
 LOG_DIR="/cfs/klemming/home/x/xueyaw/xueyao/data/metagenomics/$BIOPROJECT/log"
 RESUBMIT_SCRIPT="/cfs/klemming/home/x/xueyaw/xueyao/tmp/resubmit_biobakery.sh"
+RESUBMIT_TMPELATE="/cfs/klemming/home/x/xueyaw/xueyao/project/microbial_preprocessing/src/wmgx/workflow/2_2_1_resubmit.sh"
+
+touch $RESUBMIT_SCRIPT
 
 # Initialize an empty array for unfinished samples
 REMAINING_JOBS=()
@@ -55,7 +58,7 @@ echo "DATABASE_DIR='/cfs/klemming/home/x/xueyaw/xueyao/biobakery_workflows_datab
 echo "SAMPLES=(${REMAINING_JOBS[@]})" >> "$RESUBMIT_SCRIPT"
 echo "SAMPLE_NAME=\${SAMPLES[\$SLURM_ARRAY_TASK_ID]}" >> "$RESUBMIT_SCRIPT"
 
-cat "/cfs/klemming/home/x/xueyaw/xueyao/project/mm_network_tetralith/mm_network/src/metagenomics/workflow/2_2_1_resubmit.sh" >> "$RESUBMIT_SCRIPT"
+cat "$RESUBMIT_TMPELATE" >> "$RESUBMIT_SCRIPT"
 
 #echo "bash /cfs/klemming/home/x/xueyaw/xueyao/project/mm_network_tetralith/mm_network/src/metagenomics/workflow/2_1_biobakery_array.sh \$SAMPLE_NAME" >> "$RESUBMIT_SCRIPT"
 
